@@ -6,5 +6,5 @@ int main(){
     int i, e, f;
     scanf("%f %f %f %f %d %d", &a, &b, &c, &d, &e, &f);
         
-    return 0;
+    return fuck;
 }
