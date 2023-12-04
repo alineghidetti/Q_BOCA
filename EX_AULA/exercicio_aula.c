@@ -67,9 +67,52 @@ float somaLinha(tMatriz mat, int lin){
 
 float somaColuna(tMatriz mat, int col){
     int i;
-    float soma;
+    float soma=0;
     for(i=0; i<mat.nlin; i++){
         soma+=mat.info[i][col];
+    }
+    return soma;
+}
+
+float somaDiagonalPrincipal(tMatriz mat){
+    int i, j, del;
+    float soma=0;
+
+    if(mat.nlin > mat.ncol){
+        del=mat.ncol;
+    }else{
+        del=mat.nlin;
+    }
+
+    for(i = 0; i < del; i++){
+        soma+=mat.info[i][i];
+    }
+    return soma;
+}
+
+float somaDiagonalSecundaria(tMatriz mat){ 
+    int i, j, del;
+    float soma=0;
+
+    if(mat.nlin > mat.ncol){
+        del=mat.ncol;
+    }else{
+        del=mat.nlin;
+    }
+
+    for(i = 0; i < del; i++){
+        soma+=mat.info[i][del-i];
+    }
+    return soma;
+}
+
+float somaMatriz(tMatriz mat){
+    int i, j;
+    float soma;
+    for(i = 0; i < mat.nlin; i++){
+        for(j = 0; j < mat.ncol; j++){
+            soma+=mat.info[i][j];
+        }
     }
     return soma;
 }
@@ -77,15 +120,27 @@ float somaColuna(tMatriz mat, int col){
 tInfo quadradoMagico(tMatriz mat){
     //verifica se a soma de cada linha e a soma de cada coluna são todas iguais
     int i, j;
-    float magico;
-    magico = somaLinha(mat, 0);
+    float soma;
+    soma = somaDiagonalPrincipal(mat);
+    if(soma != somaDiagonalSecundaria(mat)){
+        return 0;
+    }
+
     for(i = 0; i < mat.nlin; i++){
         for(j = 0; j < mat.ncol; j++){
-            if(magico == somaColuna(mat, i)){
-
+            if(soma != somaColuna(mat, j)){
+                return 0;
+            }
+            if(soma != somaLinha(mat, i)){
+                return 0;
             }
         }
     }
+    return 1;
+}
+
+int maiorVizi(tMatriz mat){
+
 }
 
 int main(){
@@ -94,14 +149,31 @@ int main(){
     scanf("%d %d", &mat.nlin, &mat.ncol);
 
     mat = preencheMatriz(mat);
-    //printMatriz(mat);
-    //result = somaTrianguloInferior(mat);
+    printMatriz(mat);
+    printf("\n");
+
+    /*
+    result = somaTrianguloInferior(mat);
     mat = TranspostaMat(mat);
     printMatriz(mat);
-    //result = somaLinha(mat, 0);
+    result = somaLinha(mat, 0);
+    result = somaDiagonalPrincipal(mat);
     result = somaColuna(mat, 0);    
-    printf("%.2f", result);
-    
+    printf("%.2f\n", result);
+
+    result = somaColuna(mat, 1);
+    printf("%.2f\n", result);
+
+    result = somaColuna(mat, 2);
+    printf("%.2f\n", result);
+    if(quadradoMagico(mat)){
+        printf("Quadrado Mágico!");
+    }else{
+        printf("Esse quadrado é trouxa.");
+    }
+    */
+    result = somaDiagonalSecundaria(mat);
+    printf("soma da matriz secundaria: %.2f", result);
 
 }
  
