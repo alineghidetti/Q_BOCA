@@ -139,8 +139,39 @@ tInfo quadradoMagico(tMatriz mat){
     return 1;
 }
 
-int maiorVizi(tMatriz mat){
+float somaViz(tMatriz mat, int lin, int col){
+    int i, j;
+    float soma;
+    soma=0;
+    soma = -mat.info[lin][col];
+    for(i = lin - 1; i <= lin + 1; i++){
+        for(j = col - 1; j <= col + 1; j++){
+            if(!(i < 0 || j < 0 || i >= mat.nlin || j >= mat.ncol)){
+                soma += mat.info[i][j];
+            }
+        }
+    }
+    return soma;
+}
 
+void maiorViz(tMatriz mat){
+    int i, j;
+    int l, c;
+    float soma, somaMaior;
+    somaMaior = somaViz(mat, 0, 0);
+    l = 0;
+    c = 0;
+    for(i=0; i<mat.nlin; i++){
+        for(j=0; j<mat.ncol; j++){
+            soma = somaViz(mat, i, j);
+            if (soma > somaMaior) {
+                somaMaior = soma;
+                l = i;
+                c = j;
+            }
+        }
+    }
+   printf ("Posicao (%d, %d) - soma de vizinhos = %.2f.\n", l, c, somaMaior);
 }
 
 int main(){
@@ -149,6 +180,7 @@ int main(){
     scanf("%d %d", &mat.nlin, &mat.ncol);
 
     mat = preencheMatriz(mat);
+    printf("\n");
     printMatriz(mat);
     printf("\n");
 
@@ -171,9 +203,11 @@ int main(){
     }else{
         printf("Esse quadrado é trouxa.");
     }
-    */
     result = somaDiagonalSecundaria(mat);
     printf("soma da matriz secundaria: %.2f", result);
+    */
+
+    maiorViz(mat);
 
 }
  
