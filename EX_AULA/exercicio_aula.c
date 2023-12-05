@@ -11,7 +11,7 @@ typedef struct{
 
 
 tMatriz preencheMatriz(tMatriz mat){
-    int i, j;
+    tInfo i, j;
     for(i=0; i<mat.nlin; i++){
         for(j=0; j<mat.ncol; j++){
             scanf("%d", &mat.info[i][j]);
@@ -21,7 +21,7 @@ tMatriz preencheMatriz(tMatriz mat){
 }
 
 void printMatriz(tMatriz mat){
-    int i, j;
+    tInfo i, j;
     for(i=0; i<mat.nlin; i++){
         for(j=0; j<mat.ncol; j++){
             printf("%d ", mat.info[i][j]);
@@ -32,7 +32,7 @@ void printMatriz(tMatriz mat){
 
 tInfo somaTrianguloInferior(tMatriz mat){
     float soma;
-    int i, j;
+    tInfo i, j;
     soma=0;
     for(j=0; j<mat.ncol; j++){
         for(i=j+1; i<mat.nlin; i++){
@@ -43,7 +43,7 @@ tInfo somaTrianguloInferior(tMatriz mat){
 }
 
 tMatriz TranspostaMat(tMatriz mat){
-    int i, j;
+    tInfo i, j;
     tMatriz transposta;
     transposta.ncol = mat.nlin;
     transposta.nlin = mat.ncol;
@@ -56,8 +56,8 @@ tMatriz TranspostaMat(tMatriz mat){
     return transposta;
 }
 
-float somaLinha(tMatriz mat, int lin){
-    int i, j;
+float somaLinha(tMatriz mat, tInfo lin){
+    tInfo i, j;
     float soma=0;
     for(i=0; i<mat.ncol; i++){
         soma+=mat.info[lin][i];
@@ -65,8 +65,8 @@ float somaLinha(tMatriz mat, int lin){
     return soma;
 }
 
-float somaColuna(tMatriz mat, int col){
-    int i;
+float somaColuna(tMatriz mat, tInfo col){
+    tInfo i;
     float soma=0;
     for(i=0; i<mat.nlin; i++){
         soma+=mat.info[i][col];
@@ -75,7 +75,7 @@ float somaColuna(tMatriz mat, int col){
 }
 
 float somaDiagonalPrincipal(tMatriz mat){
-    int i, j, del;
+    tInfo i, j, del;
     float soma=0;
 
     if(mat.nlin > mat.ncol){
@@ -91,7 +91,7 @@ float somaDiagonalPrincipal(tMatriz mat){
 }
 
 float somaDiagonalSecundaria(tMatriz mat){ 
-    int i, j, del;
+    tInfo i, j, del;
     float soma=0;
 
     if(mat.nlin > mat.ncol){
@@ -107,7 +107,7 @@ float somaDiagonalSecundaria(tMatriz mat){
 }
 
 float somaMatriz(tMatriz mat){
-    int i, j;
+    tInfo i, j;
     float soma;
     for(i = 0; i < mat.nlin; i++){
         for(j = 0; j < mat.ncol; j++){
@@ -119,7 +119,7 @@ float somaMatriz(tMatriz mat){
 
 tInfo quadradoMagico(tMatriz mat){
     //verifica se a soma de cada linha e a soma de cada coluna são todas iguais
-    int i, j;
+    tInfo i, j;
     float soma;
     soma = somaDiagonalPrincipal(mat);
     if(soma != somaDiagonalSecundaria(mat)){
@@ -139,8 +139,8 @@ tInfo quadradoMagico(tMatriz mat){
     return 1;
 }
 
-float somaViz(tMatriz mat, int lin, int col){
-    int i, j;
+float somaViz(tMatriz mat, tInfo lin, tInfo col){
+    tInfo i, j;
     float soma;
     soma=0;
     soma = -mat.info[lin][col];
@@ -155,8 +155,8 @@ float somaViz(tMatriz mat, int lin, int col){
 }
 
 void maiorViz(tMatriz mat){
-    int i, j;
-    int l, c;
+    tInfo i, j;
+    tInfo l, c;
     float soma, somaMaior;
     somaMaior = somaViz(mat, 0, 0);
     l = 0;
@@ -177,12 +177,14 @@ void maiorViz(tMatriz mat){
 int main(){
     tMatriz mat;
     float result;
+    printf ("Forneca o numero  de linhas e de colunas da matriz: ");
     scanf("%d %d", &mat.nlin, &mat.ncol);
 
     mat = preencheMatriz(mat);
     printf("\n");
-    printMatriz(mat);
+    printf("MATRIZ [%dx%d]", mat.nlin, mat.ncol);
     printf("\n");
+    printMatriz(mat);
 
     /*
     result = somaTrianguloInferior(mat);
